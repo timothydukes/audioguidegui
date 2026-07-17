@@ -1,0 +1,88 @@
+{
+ "aggui_version": "0.2",
+ "kind": "template",
+ "name": "08-polyphony",
+ "notes": "To run this example, first ensure that lachenmann.aiff and heat sink.aiff\nhave been segmented with agSegmentSf.py. Then execute the following\ncommand in the terminal:\npython3 agConcatenate.py examples/08-polyphony.py\nNOTE You must install librosa and scipy for the following example to work.\nDepending on which version of Python you're using, either run:\npython2 -m pip install --user librosa scipy\nor\npython3 -m pip install --user librosa scipy\nALSO NOTE: as of 20/1/2020 (Biden day), some users have had problems\ninstalling librosa on osx. Many are having a problem with pip & llvmlite\nand have needed to downgrade to python3.6 until it the issue is resolved.\nCheck out this thread for the deets:\nhttps://github.com/librosa/librosa/issues/1270\nSometimes target sounds are polyphonic (as is the case with the target\nfile examples/bone.aiff).  With soundfiles where there are simultanously\n(or near-simultanously) overlapping sound streams, if can be useful to\nseparate these streams before the concatenative process.  Separation aids\nin segmentation and can better represent polyphonic timbral content.\nYou can do this by adding the 'decompose' keyword to the tsf() variable.\nThis will break the target sound in the a number of independant streams.\nAt the moment only NMF and HPSS signal decomposition are supported.  This\nworks by creating a new target soundfile in the directory\naudioguide/data_decomposedtargets.  It will be the duration of the\noriginal target sound times the number of streams.  The concatenative\nprocess then takes place on the longer, decomposed target  to ensure\nthat normalization and segmentation work properly.  Selected segments are\nthen rearranged temporally to match the original target sound's structure.",
+ "options": {
+  "RPP_FILEPATH": "output/output.rpp",
+  "RPP_INCLUDE_TARGET": true
+ },
+ "target": {
+  "args": [
+   "bone.aiff"
+  ],
+  "kwargs": {
+   "thresh": -26,
+   "offsetRise": 3,
+   "decompose": {
+    "type": "NMF",
+    "streams": 7,
+    "fftsize": 1024,
+    "hopsize": 256
+   }
+  }
+ },
+ "corpus": [
+  {
+   "args": [
+    "heat sink.aiff"
+   ],
+   "kwargs": {}
+  },
+  {
+   "args": [
+    "lachenmann.aiff"
+   ],
+   "kwargs": {}
+  }
+ ],
+ "search": [
+  {
+   "args": [
+    "closest_percent",
+    {
+     "__obj__": "d",
+     "args": [
+      "effDur-seg"
+     ],
+     "kwargs": {
+      "norm": 1
+     }
+    },
+    {
+     "__obj__": "d",
+     "args": [
+      "power-seg"
+     ],
+     "kwargs": {
+      "norm": 1
+     }
+    }
+   ],
+   "kwargs": {
+    "percent": 20
+   }
+  },
+  {
+   "args": [
+    "closest",
+    {
+     "__obj__": "d",
+     "args": [
+      "mfccs"
+     ],
+     "kwargs": {}
+    }
+   ],
+   "kwargs": {}
+  }
+ ],
+ "superimpose": {
+  "args": [],
+  "kwargs": {
+   "maxSegment": 2
+  }
+ },
+ "instruments_raw": "",
+ "render_mode": "preview"
+}

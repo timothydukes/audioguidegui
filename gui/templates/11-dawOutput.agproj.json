@@ -1,0 +1,100 @@
+{
+ "aggui_version": "0.2",
+ "kind": "template",
+ "name": "11-dawOutput",
+ "notes": "To run this example, first ensure that lachenmann.aiff and heat sink.aiff\nhave been segmented with agSegmentSf.py. Then execute the following\ncommand in the terminal:\npython3 agConcatenate.py examples/11-dawOutput.py\nAs of version 1.71, audioGuide can create RPP files for reaper. This is\ndone by setting a filepath for the RPP_FILEPATH variable.\nAs of version 1.69, audioGuide can create AAF files for loading into\nLogic/Pro Tools. This is done by setting a filepath for the AAF_FILEPATH\nvariable. This has been tested and works in Logic.\nFor AAF file support, you need to install the python module pyaaf2.\nThis example file will create quite a few tracks in the AAF/RPP files. Each\nentry in the corpus gets at minimum of one track. More tracks are made if\nthere are overlapping selections from the csf entry and/or if the csf has\nresources of different channel counts.\nNote that the reaper RPP file supports corpus sound envelopes and\ntranspositions while the aaf output does not.",
+ "options": {
+  "AAF_FILEPATH": "output/output.aaf",
+  "AAF_INCLUDE_TARGET": true,
+  "AAF_CPSTRACK_METHOD": "cpsidx",
+  "RPP_FILEPATH": "output/output.rpp",
+  "RPP_INCLUDE_TARGET": true,
+  "RPP_CPSTRACK_METHOD": "cpsidx",
+  "RPP_TRANS_AFFECTS_SPEED": true,
+  "RPP_AUTOLAUNCH": true,
+  "CSOUND_CSD_FILEPATH": null
+ },
+ "target": {
+  "args": [
+   "cage.aiff"
+  ],
+  "kwargs": {
+   "thresh": -26,
+   "offsetRise": 1.5
+  }
+ },
+ "corpus": [
+  {
+   "args": [
+    "heat sink.aiff"
+   ],
+   "kwargs": {
+    "transMethod": "random -6 -12"
+   }
+  },
+  {
+   "args": [
+    "lachenmann.aiff"
+   ],
+   "kwargs": {
+    "scaleDb": -6,
+    "onsetLen": "20%"
+   }
+  }
+ ],
+ "search": [
+  {
+   "args": [
+    "ratio_limit",
+    {
+     "__obj__": "d",
+     "args": [
+      "effDur-seg"
+     ],
+     "kwargs": {}
+    }
+   ],
+   "kwargs": {
+    "maxratio": 1
+   }
+  },
+  {
+   "args": [
+    "closest_percent",
+    {
+     "__obj__": "d",
+     "args": [
+      "power-seg"
+     ],
+     "kwargs": {
+      "norm": 1
+     }
+    }
+   ],
+   "kwargs": {
+    "percent": 20
+   }
+  },
+  {
+   "args": [
+    "closest",
+    {
+     "__obj__": "d",
+     "args": [
+      "mfccs"
+     ],
+     "kwargs": {}
+    }
+   ],
+   "kwargs": {}
+  }
+ ],
+ "superimpose": {
+  "args": [],
+  "kwargs": {
+   "maxSegment": 3
+  }
+ },
+ "instruments_raw": "",
+ "render_mode": "preview"
+}

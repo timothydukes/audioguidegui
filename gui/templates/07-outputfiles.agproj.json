@@ -1,0 +1,85 @@
+{
+ "aggui_version": "0.2",
+ "kind": "template",
+ "name": "07-outputfiles",
+ "notes": "This file gives you some information about how to work with outputfile\nnames in audioguide. Pretty simple stuff.",
+ "options": {
+  "OUTPUT_LABEL_FILEPATH": null,
+  "DICT_OUTPUT_FILEPATH": null,
+  "MAXMSP_OUTPUT_FILEPATH": null,
+  "BACH_FILEPATH": null,
+  "CSOUND_CSD_FILEPATH": "/tmp/hideme.csd",
+  "CSOUND_RENDER_FILEPATH": "output/$TIME-output.wav",
+  "HTML_LOG_FILEPATH": "output/log.html"
+ },
+ "target": {
+  "args": [
+   "cage.aiff"
+  ],
+  "kwargs": {
+   "thresh": -26,
+   "offsetRise": 1.5
+  }
+ },
+ "corpus": [
+  {
+   "args": [
+    "lachenmann.aiff"
+   ],
+   "kwargs": {}
+  }
+ ],
+ "search": [
+  {
+   "args": [
+    "ratio_limit",
+    {
+     "__obj__": "d",
+     "args": [
+      "effDur-seg"
+     ],
+     "kwargs": {}
+    }
+   ],
+   "kwargs": {
+    "maxratio": 1
+   }
+  },
+  {
+   "args": [
+    "ratio_limit",
+    {
+     "__obj__": "d",
+     "args": [
+      "power-seg"
+     ],
+     "kwargs": {}
+    }
+   ],
+   "kwargs": {
+    "maxratio": 1
+   }
+  },
+  {
+   "args": [
+    "closest",
+    {
+     "__obj__": "d",
+     "args": [
+      "mfccs-seg"
+     ],
+     "kwargs": {}
+    }
+   ],
+   "kwargs": {}
+  }
+ ],
+ "superimpose": {
+  "args": [],
+  "kwargs": {
+   "maxSegment": 4
+  }
+ },
+ "instruments_raw": "",
+ "render_mode": "preview"
+}

@@ -1,0 +1,67 @@
+{
+ "aggui_version": "0.2",
+ "kind": "template",
+ "name": "06-granular",
+ "notes": "To run this example, you first need to segment the soundfile\nheat sink.aiff into grains by running the following command:\npython3 agGranulateSf.py examples/lachenmann.aiff\nThen run concatenation script specifying this file as the options\nfile for agConcatenate.py:\npython3 agConcatenate.py examples/06-granular.py",
+ "options": {},
+ "target": {
+  "args": [
+   "cage.aiff"
+  ],
+  "kwargs": {
+   "thresh": -26,
+   "offsetRise": 1.5
+  }
+ },
+ "corpus": [
+  {
+   "args": [
+    "heat sink.aiff"
+   ],
+   "kwargs": {
+    "onsetLen": "50%",
+    "offsetLen": "50%"
+   }
+  }
+ ],
+ "search": [
+  {
+   "args": [
+    "closest_percent",
+    {
+     "__obj__": "d",
+     "args": [
+      "power-seg"
+     ],
+     "kwargs": {
+      "normmethod": "minmax"
+     }
+    }
+   ],
+   "kwargs": {
+    "percent": 20
+   }
+  },
+  {
+   "args": [
+    "closest",
+    {
+     "__obj__": "d",
+     "args": [
+      "mfccs-seg"
+     ],
+     "kwargs": {}
+    }
+   ],
+   "kwargs": {}
+  }
+ ],
+ "superimpose": {
+  "args": [],
+  "kwargs": {
+   "maxFrame": 1
+  }
+ },
+ "instruments_raw": "",
+ "render_mode": "preview"
+}

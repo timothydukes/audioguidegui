@@ -1,0 +1,360 @@
+{
+ "aggui_version": "0.2",
+ "kind": "template",
+ "name": "12-creatingAnAcousticScore",
+ "notes": "See the 'Creating Notated Scores' section of the documentation\ndiscuss\nwholeFileMinStart\nclipDurationToTarget\nscaleDb='filenamedyn'",
+ "options": {
+  "BACH_INCLUDE_TARGET": false,
+  "SEARCH_PATHS": [
+   "/Users/ben/Documents/sfdb/"
+  ],
+  "CORPUS_GLOBAL_ATTRIBUTES": {
+   "limit": [
+    "power-seg > 30%"
+   ]
+  },
+  "BACH_SLOTS_MAPPING": {
+   "__dict__": [
+    [
+     1,
+     "fullpath"
+    ],
+    [
+     2,
+     "sfskiptime"
+    ],
+    [
+     3,
+     "sfchannels"
+    ],
+    [
+     4,
+     "env"
+    ],
+    [
+     5,
+     "transposition"
+    ],
+    [
+     6,
+     "selectionnumber"
+    ],
+    [
+     7,
+     [
+      "mfcc1-seg",
+      "mfcc2-seg",
+      "mfcc3-seg",
+      "mfcc4-seg",
+      "mfcc5-seg",
+      "mfcc6-seg",
+      "mfcc7-seg",
+      "mfcc8-seg",
+      "mfcc9-seg",
+      "mfcc10-seg",
+      "mfcc11-seg",
+      "mfcc12-seg"
+     ]
+    ],
+    [
+     20,
+     "instr_dynamic"
+    ],
+    [
+     22,
+     "instr_articulation"
+    ],
+    [
+     23,
+     "instr_notehead"
+    ],
+    [
+     24,
+     "instr_annotation"
+    ],
+    [
+     25,
+     "instr_technique"
+    ],
+    [
+     26,
+     "instr_temporal_mode"
+    ]
+   ]
+  }
+ },
+ "target": {
+  "args": [
+   "cage.aiff"
+  ],
+  "kwargs": {
+   "thresh": -36,
+   "offsetRise": 1.5
+  }
+ },
+ "corpus": [
+  {
+   "args": [
+    "violin/staccato/"
+   ],
+   "kwargs": {
+    "instrTag": "violin",
+    "instrParams": {
+     "technique": "arco",
+     "articulation": "staccato",
+     "temporal_mode": "artic"
+    },
+    "scaleDb": "filenamedyn",
+    "wholeFile": true
+   }
+  },
+  {
+   "args": [
+    "violin/sul-ponticello/"
+   ],
+   "kwargs": {
+    "instrTag": "violin",
+    "instrParams": {
+     "technique": "arco",
+     "annotation": "SP"
+    },
+    "scaleDb": "filenamedyn",
+    "clipDurationToTarget": true,
+    "wholeFileMinStart": 0.1,
+    "wholeFile": true
+   }
+  },
+  {
+   "args": [
+    "violin/sul-tasto/"
+   ],
+   "kwargs": {
+    "instrTag": "violin",
+    "instrParams": {
+     "technique": "arco",
+     "annotation": "ST"
+    },
+    "scaleDb": "filenamedyn",
+    "clipDurationToTarget": true,
+    "wholeFileMinStart": 0.1,
+    "wholeFile": true
+   }
+  },
+  {
+   "args": [
+    "violin/artificial-harmonic/"
+   ],
+   "kwargs": {
+    "instrTag": "violin",
+    "instrParams": {
+     "polyphony_max_voices": 1,
+     "technique": "arco",
+     "annotation": "harmonic"
+    },
+    "scaleDb": "filenamedyn",
+    "clipDurationToTarget": true,
+    "wholeFile": true
+   }
+  },
+  {
+   "args": [
+    "violin/pizz/"
+   ],
+   "kwargs": {
+    "instrTag": "violin",
+    "instrParams": {
+     "temporal_mode": "artic",
+     "minspeed": 0.12,
+     "technique": "pizz",
+     "annotation": "pizz",
+     "articulation": "staccato",
+     "notehead": "cross"
+    },
+    "scaleDb": "filenamedyn",
+    "wholeFile": true
+   }
+  },
+  {
+   "args": [
+    "viola/non-vibrato/"
+   ],
+   "kwargs": {
+    "instrTag": "viola",
+    "instrParams": {
+     "technique": "arco"
+    },
+    "scaleDb": "filenamedyn",
+    "clipDurationToTarget": true,
+    "wholeFileMinStart": 0.1,
+    "wholeFile": true
+   }
+  },
+  {
+   "args": [
+    "viola/sul-ponticello/"
+   ],
+   "kwargs": {
+    "instrTag": "viola",
+    "instrParams": {
+     "technique": "arco",
+     "annotation": "SP"
+    },
+    "scaleDb": "filenamedyn",
+    "clipDurationToTarget": true,
+    "wholeFileMinStart": 0.1,
+    "wholeFile": true
+   }
+  },
+  {
+   "args": [
+    "viola/sul-tasto/"
+   ],
+   "kwargs": {
+    "instrTag": "viola",
+    "instrParams": {
+     "technique": "arco",
+     "annotation": "ST"
+    },
+    "scaleDb": "filenamedyn",
+    "clipDurationToTarget": true,
+    "wholeFileMinStart": 0.1,
+    "wholeFile": true
+   }
+  },
+  {
+   "args": [
+    "viola/artificial-harmonic/"
+   ],
+   "kwargs": {
+    "instrTag": "viola",
+    "instrParams": {
+     "polyphony_max_voices": 1,
+     "technique": "arco",
+     "annotation": "harmonic"
+    },
+    "scaleDb": "filenamedyn",
+    "clipDurationToTarget": true,
+    "wholeFileMinStart": 0.1,
+    "wholeFile": true
+   }
+  },
+  {
+   "args": [
+    "cello/staccato/"
+   ],
+   "kwargs": {
+    "instrTag": "cello",
+    "instrParams": {
+     "technique": "arco",
+     "temporal_mode": "artic",
+     "articulation": "accent"
+    },
+    "scaleDb": "filenamedyn",
+    "wholeFile": true
+   }
+  },
+  {
+   "args": [
+    "cello/sul-ponticello/"
+   ],
+   "kwargs": {
+    "instrTag": "cello",
+    "instrParams": {
+     "technique": "arco",
+     "annotation": "SP"
+    },
+    "scaleDb": "filenamedyn",
+    "clipDurationToTarget": true,
+    "wholeFileMinStart": 0.1,
+    "wholeFile": true
+   }
+  },
+  {
+   "args": [
+    "cello/sul-tasto/"
+   ],
+   "kwargs": {
+    "instrTag": "cello",
+    "instrParams": {
+     "technique": "arco",
+     "annotation": "ST"
+    },
+    "scaleDb": "filenamedyn",
+    "clipDurationToTarget": true,
+    "wholeFileMinStart": 0.1,
+    "wholeFile": true
+   }
+  },
+  {
+   "args": [
+    "cello/artificial-harmonic/"
+   ],
+   "kwargs": {
+    "instrTag": "cello",
+    "instrParams": {
+     "polyphony_max_voices": 1,
+     "technique": "arco",
+     "annotation": "harmonic"
+    },
+    "scaleDb": "filenamedyn",
+    "clipDurationToTarget": true,
+    "wholeFileMinStart": 0.1,
+    "wholeFile": true
+   }
+  },
+  {
+   "args": [
+    "cello/pizz/"
+   ],
+   "kwargs": {
+    "instrTag": "cello",
+    "instrParams": {
+     "temporal_mode": "artic",
+     "minspeed": 0.12,
+     "technique": "pizz",
+     "annotation": "pizz",
+     "articulation": "staccato",
+     "notehead": "cross"
+    },
+    "scaleDb": "filenamedyn",
+    "wholeFile": true
+   }
+  }
+ ],
+ "search": [
+  {
+   "args": [
+    "ratio_limit",
+    {
+     "__obj__": "d",
+     "args": [
+      "power-seg"
+     ],
+     "kwargs": {}
+    }
+   ],
+   "kwargs": {
+    "maxratio": 1
+   }
+  },
+  {
+   "args": [
+    "closest",
+    {
+     "__obj__": "d",
+     "args": [
+      "mfccs-seg"
+     ],
+     "kwargs": {}
+    }
+   ],
+   "kwargs": {}
+  }
+ ],
+ "superimpose": {
+  "args": [],
+  "kwargs": {}
+ },
+ "instruments_raw": "INSTRUMENTS = score(instr('violin', polyphony_max_voices=2, polyphony_min_range=3, polyphony_max_range=8, technique_switch_delay_map=[('pizz', 'arco', 0.4), ('arco', 'pizz', 0.6)]), instr('violin', minspeed=0.1, polyphony_minspeed=0.4, polyphony_max_voices=2, polyphony_min_range=3, polyphony_max_range=8, technique_switch_delay_map=[('pizz', 'arco', 0.4), ('arco', 'pizz', 0.6)]), instr('viola', clef='Alto', minspeed=0.1, polyphony_minspeed=0.4, polyphony_max_voices=2, polyphony_min_range=3, polyphony_max_range=8), instr('cello', clef='F', minspeed=0.1, polyphony_minspeed=0.4, polyphony_max_voices=2, polyphony_min_range=3, polyphony_max_range=8, technique_switch_delay_map=[('pizz', 'arco', 0.4), ('arco', 'pizz', 0.6)]))",
+ "render_mode": "preview"
+}

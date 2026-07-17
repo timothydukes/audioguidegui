@@ -1,0 +1,73 @@
+{
+ "aggui_version": "0.2",
+ "kind": "template",
+ "name": "01-simplest",
+ "notes": "To run this example, you first need to segment the soundfile\nlachenmann.aiff by running the following command:\npython3 agSegmentSf.py examples/lachenmann.aiff\nThen run concatenation script specifying this file as the options\nfile for agConcatenate.py:\npython3 agConcatenate.py examples/01-simplest.py",
+ "options": {},
+ "target": {
+  "args": [
+   "cage.aiff"
+  ],
+  "kwargs": {
+   "thresh": -25,
+   "offsetRise": 1.5
+  }
+ },
+ "corpus": [
+  {
+   "args": [
+    "lachenmann.aiff"
+   ],
+   "kwargs": {}
+  }
+ ],
+ "search": [
+  {
+   "args": [
+    "closest_percent",
+    {
+     "__obj__": "d",
+     "args": [
+      "effDur-seg"
+     ],
+     "kwargs": {
+      "norm": 1
+     }
+    },
+    {
+     "__obj__": "d",
+     "args": [
+      "power-seg"
+     ],
+     "kwargs": {
+      "norm": 1
+     }
+    }
+   ],
+   "kwargs": {
+    "percent": 25
+   }
+  },
+  {
+   "args": [
+    "closest",
+    {
+     "__obj__": "d",
+     "args": [
+      "mfccs"
+     ],
+     "kwargs": {}
+    }
+   ],
+   "kwargs": {}
+  }
+ ],
+ "superimpose": {
+  "args": [],
+  "kwargs": {
+   "maxSegment": 6
+  }
+ },
+ "instruments_raw": "",
+ "render_mode": "preview"
+}

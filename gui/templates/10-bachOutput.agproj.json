@@ -1,0 +1,144 @@
+{
+ "aggui_version": "0.2",
+ "kind": "template",
+ "name": "10-bachOutput",
+ "notes": "To run this example, first ensure that lachenmann.aiff and heat sink.aiff\nhave been segmented with agSegmentSf.py. Then execute the following\ncommand in the terminal:\npython3 agConcatenate.py examples/10-bachOutput.py\nAudioguide automatically creates an output file for every concatenation\nthat may be loaded into a bach.roll in Max/MSP. The path for the bach\noutput file, which is output/bach_roll.txt by default, is controlable by\nthe BACH_FILEPATH variable. You may visualize, explore, and playback\nconcatenated sounds with the patch maxmsp/bach/ag_playback.maxpat.\nPlease note that this example shows only the simplest interaction with\nBach. Example 12 details AudioGuide's INSTRUMENTS infrastructure, which\nlet's you create acoustic scores.",
+ "options": {
+  "BACH_INCLUDE_TARGET": true,
+  "BACH_TARGET_STAFF": "F",
+  "BACH_CORPUS_STAFF": "FG",
+  "BACH_SLOTS_MAPPING": {
+   "__dict__": [
+    [
+     1,
+     "fullpath"
+    ],
+    [
+     2,
+     "sfskiptime"
+    ],
+    [
+     3,
+     "sfchannels"
+    ],
+    [
+     4,
+     "env"
+    ],
+    [
+     5,
+     "transposition"
+    ],
+    [
+     6,
+     "selectionnumber"
+    ],
+    [
+     7,
+     [
+      "centroid-seg",
+      "centroid-minseg",
+      "centroid-maxseg"
+     ]
+    ],
+    [
+     8,
+     [
+      "mfcc1-seg",
+      "mfcc2-seg",
+      "mfcc3-seg",
+      "mfcc4-seg",
+      "mfcc5-seg",
+      "mfcc6-seg",
+      "mfcc7-seg",
+      "mfcc8-seg",
+      "mfcc9-seg",
+      "mfcc10-seg",
+      "mfcc11-seg",
+      "mfcc12-seg"
+     ]
+    ],
+    [
+     9,
+     "power"
+    ]
+   ]
+  },
+  "CSOUND_CSD_FILEPATH": null
+ },
+ "target": {
+  "args": [
+   "cage.aiff"
+  ],
+  "kwargs": {
+   "thresh": -26,
+   "offsetRise": 1.5
+  }
+ },
+ "corpus": [
+  {
+   "args": [
+    "heat sink.aiff"
+   ],
+   "kwargs": {
+    "onsetLen": "50%",
+    "offsetLen": "50%"
+   }
+  },
+  {
+   "args": [
+    "lachenmann.aiff"
+   ],
+   "kwargs": {}
+  }
+ ],
+ "search": [
+  {
+   "args": [
+    "closest_percent",
+    {
+     "__obj__": "d",
+     "args": [
+      "effDur-seg"
+     ],
+     "kwargs": {
+      "norm": 1
+     }
+    },
+    {
+     "__obj__": "d",
+     "args": [
+      "power-seg"
+     ],
+     "kwargs": {
+      "norm": 1
+     }
+    }
+   ],
+   "kwargs": {
+    "percent": 20
+   }
+  },
+  {
+   "args": [
+    "closest",
+    {
+     "__obj__": "d",
+     "args": [
+      "kurtosis"
+     ],
+     "kwargs": {}
+    }
+   ],
+   "kwargs": {}
+  }
+ ],
+ "superimpose": {
+  "args": [],
+  "kwargs": {
+   "maxSegment": 3
+  }
+ },
+ "instruments_raw": "",
+ "render_mode": "preview"
+}

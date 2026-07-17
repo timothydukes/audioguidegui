@@ -1,0 +1,71 @@
+{
+ "aggui_version": "0.2",
+ "kind": "template",
+ "name": "09-searchParser",
+ "notes": "To run this example, first ensure that lachenmann.aiff bas heen segmented\nwith agSegmentSf.py. Then execute the following command in the terminal:\npython3 agConcatenate.py examples/09-searchParser.py",
+ "options": {},
+ "target": {
+  "args": [
+   "cage.aiff"
+  ],
+  "kwargs": {
+   "thresh": -26,
+   "offsetRise": 2
+  }
+ },
+ "corpus": [
+  {
+   "args": [
+    "lachenmann.aiff"
+   ],
+   "kwargs": {
+    "limit": "centroid-seg > 90%"
+   }
+  },
+  {
+   "args": [
+    "lachenmann.aiff"
+   ],
+   "kwargs": {
+    "limit": "centroid-seg < 10%"
+   }
+  }
+ ],
+ "search": [
+  {
+   "args": [
+    "parser",
+    "zeroCross-seg > 50%",
+    "corpus_select",
+    [
+     0
+    ],
+    [
+     1
+    ]
+   ],
+   "kwargs": {}
+  },
+  {
+   "args": [
+    "closest",
+    {
+     "__obj__": "d",
+     "args": [
+      "mfccs"
+     ],
+     "kwargs": {}
+    }
+   ],
+   "kwargs": {}
+  }
+ ],
+ "superimpose": {
+  "args": [],
+  "kwargs": {
+   "maxSegment": 2
+  }
+ },
+ "instruments_raw": "",
+ "render_mode": "preview"
+}

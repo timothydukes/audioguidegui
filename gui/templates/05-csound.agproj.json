@@ -1,0 +1,79 @@
+{
+ "aggui_version": "0.2",
+ "kind": "template",
+ "name": "05-csound",
+ "notes": "To run this example, first ensure that lachenmann.aiff and heat sink.aiff\nhave been segmented with agSegmentSf.py. Then execute the following\ncommand in the terminal:\npython3 agConcatenate.py examples/05-csound.py",
+ "options": {
+  "CSOUND_SR": 48000,
+  "CSOUND_KSMPS": 128,
+  "CSOUND_BITS": 16,
+  "CSOUND_STRETCH_CORPUS_TO_TARGET_DUR": null,
+  "CSOUND_CHANNEL_RENDER_METHOD": "corpusmax",
+  "CSOUND_CSD_FILEPATH": "output/output.csd",
+  "CSOUND_RENDER_FILEPATH": "output/output.aiff",
+  "CSOUND_PLAY_RENDERED_FILE": true
+ },
+ "target": {
+  "args": [
+   "cage.aiff"
+  ],
+  "kwargs": {
+   "thresh": -26,
+   "offsetRise": 1.5
+  }
+ },
+ "corpus": [
+  {
+   "args": [
+    "lachenmann.aiff"
+   ],
+   "kwargs": {}
+  },
+  {
+   "args": [
+    "heat sink.aiff"
+   ],
+   "kwargs": {}
+  }
+ ],
+ "search": [
+  {
+   "args": [
+    "ratio_limit",
+    {
+     "__obj__": "d",
+     "args": [
+      "effDur-seg"
+     ],
+     "kwargs": {
+      "norm": 1
+     }
+    }
+   ],
+   "kwargs": {
+    "maxratio": 1.1
+   }
+  },
+  {
+   "args": [
+    "closest",
+    {
+     "__obj__": "d",
+     "args": [
+      "mfccs"
+     ],
+     "kwargs": {}
+    }
+   ],
+   "kwargs": {}
+  }
+ ],
+ "superimpose": {
+  "args": [],
+  "kwargs": {
+   "maxSegment": 4
+  }
+ },
+ "instruments_raw": "",
+ "render_mode": "preview"
+}
