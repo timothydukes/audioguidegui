@@ -1,0 +1,1000 @@
+{
+ "_meta": {
+  "source": "docs_v1.79.html",
+  "generator": "build_tooltips_v1.py"
+ },
+ "options": {
+  "CSOUND_CSD_FILEPATH": {
+   "type": "string/None",
+   "default": "‘output/output.csd’",
+   "doc": "creates an output csd file for rendering the resulting concatenation with csound."
+  },
+  "CSOUND_RENDER_FILEPATH": {
+   "type": "string/None",
+   "default": "‘output/output.aiff’",
+   "doc": "sets the sound output file in the CSOUND_CSD_FILEPATH file. This is the name of csound’s output soundfile and will be created at the end of concatenation."
+  },
+  "CSOUND_SCORE_FILEPATH": {
+   "type": "string/None",
+   "default": "None",
+   "doc": "writes a simple textfile in the csound score format."
+  },
+  "BACH_FILEPATH": {
+   "type": "string/None",
+   "default": "‘output/bach_roll.txt’",
+   "doc": "Gathered syntax for concatenation selections that you can load into a bach.roll. See maxmsp/bach/main.maxpat for usage."
+  },
+  "AAF_FILEPATH": {
+   "type": "string/None",
+   "default": "None",
+   "doc": "Create an Advanced Authoring Format file for loading into Logic/Pro Tools."
+  },
+  "RPP_FILEPATH": {
+   "type": "string/None",
+   "default": "None",
+   "doc": "Create a Reaper output file."
+  },
+  "HTML_LOG_FILEPATH": {
+   "type": "string/None",
+   "default": "‘output/log.html’",
+   "doc": "a log file with lots of information from the concatenation algorithm."
+  },
+  "COPY_OPTIONS_FILEPATH": {
+   "type": "string/None",
+   "default": "None",
+   "doc": "Makes a copy of the options file that you're using so that you can remember how to recreate this output."
+  },
+  "OUTPUT_LABEL_FILEPATH": {
+   "type": "string/None",
+   "default": "‘output/outputlabels.txt’",
+   "doc": "Audacity-style labels showing the selected corpus sounds and how they overlap."
+  },
+  "LISP_OUTPUT_FILEPATH": {
+   "type": "string/None",
+   "default": "‘output/output.lisp.txt’",
+   "doc": "a textfile containing selected corpus events as a lisp-style list."
+  },
+  "DICT_OUTPUT_FILEPATH": {
+   "type": "string/None",
+   "default": "‘output/output.json’",
+   "doc": "a textfile containing selected corpus events in json format."
+  },
+  "MAXMSP_OUTPUT_FILEPATH": {
+   "type": "string/None",
+   "default": "‘output/output.maxmsp.json’",
+   "doc": "a textfile containing a list of selected corpus events. Data includes starttime in MS, duration in MS, filename, transposition, amplitude, etc."
+  },
+  "TARGET_SEGMENT_LABELS_FILEPATH": {
+   "type": "string/None",
+   "default": "‘output/targetlabels.txt’",
+   "doc": "Audacity-style labels showing how the target sound was segmented."
+  },
+  "TARGET_SEGMENTATION_GRAPH_FILEPATH": {
+   "type": "string/None",
+   "default": "None",
+   "doc": "like TARGET_SEGMENT_LABELS_FILEPATH, this variable creates a file to show information about target segmentation. Here however, the output is a jpg graph of the onset and offset times and the target’s power. This output requires you to install python’s module matplotlib."
+  },
+  "TARGET_DESCRIPTORS_FILEPATH": {
+   "type": "string/None",
+   "default": "None",
+   "doc": "saves the loaded target descriptors to a json dictionary."
+  },
+  "TARGET_PLOT_DESCRIPTORS_FILEPATH": {
+   "type": "string/None",
+   "default": "None",
+   "doc": "creates a plot of each target descriptor used in concatenation. Doesn’t create plots for averaged descriptors (“-seg”), only time varying descriptors."
+  },
+  "DATA_FROM_SEGMENTATION_FILEPATH": {
+   "type": "string/None",
+   "default": "None",
+   "doc": "This file lists all of the extra data of selected events during concatenation. This data is taken from corpus segmentation files, and includes everything after the startTime and endTime of each segment. This is useful if you want to tag each corpus segment with text based information for use later."
+  },
+  "CSOUND_SR": {
+   "type": "int",
+   "default": "48000",
+   "doc": "The sample rate used for csound rendering. Csound will interpolate the sample rates of all corpus files to this rate. It will be the sr of csound’s output soundfile."
+  },
+  "CSOUND_BITS": {
+   "type": "int",
+   "default": "16",
+   "doc": "The bitrate of the csound output soundfile. Valid values are 16, 24, and 32."
+  },
+  "CSOUND_KSMPS": {
+   "type": "int",
+   "default": "128",
+   "doc": "The ksmps value used for csound rendering. See csound’s documentation for more information."
+  },
+  "CSOUND_NORMALIZE": {
+   "type": "bool",
+   "default": "False",
+   "doc": "If True normalize csound's output soundfile after rendering."
+  },
+  "CSOUND_NORMALIZE_PEAK_DB": {
+   "type": "float",
+   "default": "-3",
+   "doc": "If CSOUND_NORMALIZE is True, normalization of this peak dB will take place."
+  },
+  "CSOUND_PLAY_RENDERED_FILE": {
+   "type": "bool",
+   "default": "True",
+   "doc": "if True, AudioGuide will play the rendered csound file at the command line at the end of the concatenative algorithm."
+  },
+  "CSOUND_STRETCH_CORPUS_TO_TARGET_DUR": {
+   "type": "string/None",
+   "default": "None",
+   "doc": "Affects the durations of concatenated sound events rendered by csound.\n\n- None - Playback speed unchanged.\n- pv - Uses a phase vocoder to stretch corpus sounds to match the duration of the corresponding target segments.\n- transpose - Uses the speed of playback to change duration to match corresponding target segments. Note that, in this case, any other transposition information generated by the selection algorithm is overwritten (e.g. csf(pitchfilter=), csf(transmethod=)."
+  },
+  "CSOUND_CHANNEL_RENDER_METHOD": {
+   "type": "string",
+   "default": "corpusmax",
+   "doc": "Tells AudioGuide how assign the channel of corpus segments in the csound output soundfile. The default is “corpusmax”.\n\n- corpusmax - Creates an output soundfile with the same number of channels as the maxmimum of all corpus files (corpus files may have different channel counts).\n- stereo - Mixes all corpus sounds into a 2-channel soundfile.\n- targetoutputmix - Makes a simple stereo output where the target is in channel 1 and the corpus sounds are in channel 2.\n- oneChannelPerVoice - Tells AudioGuide to put selected sounds from each item of the CORPUS list into a separate channel. The number of output channels will therefore equal the length of the CORPUS list variable.\n- oneChannelPerOverlap - Tells AudioGuide to put overlapping selected sounds into different channels so that only one sound is happening in a given channel at any one time. The number of channels will be equal the maximum number of overlapping sounds in the concatenation.\n- oneChannelPerInstrument - Tells AudioGuide to put selected sounds from each instrument into a separate channel. This only works when using INSTRUMENTS."
+  },
+  "AAF_INCLUDE_TARGET": {
+   "type": "bool",
+   "default": "False",
+   "doc": "If True, adds the target soundfile to the Advanced Authoring Format output."
+  },
+  "AAF_CPSTRACK_METHOD": {
+   "type": "string",
+   "default": "'cpsidx'",
+   "doc": "A string specifying how to write selected corpus sounds into Advanced Authoring Format tracks. By default it is 'cpsidx'\n\n- cpsidx - Puts corpus sounds into AAF tracks according to their idx in the CORPUS list and their channel count.\n- minimum - Mixes all corpus sounds into a minimal number of AAF tracks."
+  },
+  "AAF_AUTOLAUNCH": {
+   "type": "bool",
+   "default": "False",
+   "doc": "If True, AudioGuide will automatically try to open the AAF file after it has been written. This is equivalent to double clicking the file in OSX."
+  },
+  "RPP_INCLUDE_TARGET": {
+   "type": "bool",
+   "default": "False",
+   "doc": "If True, adds the target soundfile to the rpp file."
+  },
+  "RPP_CPSTRACK_METHOD": {
+   "type": "string",
+   "default": "'cpsidx'",
+   "doc": "A string specifying how to write selected corpus sounds to reaper tracks. By default it is 'cpsidx'\n\n- cpsidx - Puts corpus sounds into RPP tracks according to their idx in the CORPUS list and their channel count.\n- minimum - Mixes all corpus sounds into a minimal number of RPP tracks."
+  },
+  "RPP_TRANS_AFFECTS_SPEED": {
+   "type": "bool",
+   "default": "True",
+   "doc": "If True, AudioGuide will tell Reaper to render corpus sound transposition with a speed change. If False, Reaper will preserve the original speed of the corpus sound."
+  },
+  "RPP_AUTOLAUNCH": {
+   "type": "bool",
+   "default": "False",
+   "doc": "If True, AudioGuide will automatically try to open the RPP file after it has been written. This is equivalent to double clicking the file in OSX."
+  },
+  "BACH_INCLUDE_TARGET": {
+   "type": "bool",
+   "default": "True",
+   "doc": "if True, the target soundfile will be included as the first voice in bach_roll.txt."
+  },
+  "BACH_DB_TO_VELOCITY_BREAKPOINTS": {
+   "type": "list of ints or floats",
+   "default": "[-80, 0, -0, 127]",
+   "doc": "Breakpoint-style mapping of each target and corpus segment's loudness in dB into a velocity for the bach score. The default list will map linearly from -80 to 0dB onto 0 to 127 in midi velocity (sounds below -80dB will be clipped to velocity 0). Loudness in dB takes csf(scaleDb) into account. However you can specify additional breakpoints in pairs: e.g. [-80, 0, -60, 100, -0, 127]."
+  },
+  "BACH_TARGET_STAFF": {
+   "type": "string",
+   "default": "F",
+   "doc": "The clef used for the target sound."
+  },
+  "BACH_CORPUS_STAFF": {
+   "type": "string",
+   "default": "FG",
+   "doc": "The clef used for corpus sounds."
+  },
+  "DESCRIPTOR_FORCE_ANALYSIS": {
+   "type": "bool",
+   "default": "False",
+   "doc": "if True, AudioGuide is forced to remake all analysis file, even if previously made."
+  },
+  "DESCRIPTOR_WIN_SIZE_SEC": {
+   "type": "float",
+   "default": "0.04096",
+   "doc": "the FFT window size of descriptor analysis in seconds. Note that this value gets automatically rounded to the nearest power-of-two size based on IRCAMDESCRIPTOR_RESAMPLE_RATE. 0.04096 seconds = 512 @ 12.5kHz (the default resample rate)."
+  },
+  "DESCRIPTOR_HOP_SIZE_SEC": {
+   "type": "float",
+   "default": "0.01024",
+   "doc": "the FFT window overlaps of descriptor analysis in seconds. Note that this value gets automatically rounded to the nearest power-of-two size based on IRCAMDESCRIPTOR_RESAMPLE_RATE. Important, as it effectively sets of temporal resolution of AudioGuide. Performance is best when DESCRIPTOR_HOP_SIZE_SEC/DESCRIPTOR_WIN_SIZE_SEC is a whole number."
+  },
+  "IRCAMDESCRIPTOR_RESAMPLE_RATE": {
+   "type": "int",
+   "default": "12500",
+   "doc": "The internal resample rate of the IRCAM analysis binary. Important, as it sets the frequency resolution of spectral sound descriptors."
+  },
+  "IRCAMDESCRIPTOR_WINDOW_TYPE": {
+   "type": "string",
+   "default": "‘blackman’",
+   "doc": "see ircamdescriptor documentation for details."
+  },
+  "IRCAMDESCRIPTOR_NUMB_MFCCS": {
+   "type": "int",
+   "default": "13",
+   "doc": "sets the number of MFCCs to make. When you use the descriptor 'mfccs' if will automatcially be expanded into mfccs1-N where N is IRCAMDESCRIPTOR_NUMB_MFCCS."
+  },
+  "IRCAMDESCRIPTOR_F0_MAX_ANALYSIS_FREQ": {
+   "type": "float",
+   "default": "5000",
+   "doc": "see ircamdescriptor documentation for details."
+  },
+  "IRCAMDESCRIPTOR_F0_MIN_FREQUENCY": {
+   "type": "float",
+   "default": "20",
+   "doc": "minimum possible f0 frequency."
+  },
+  "IRCAMDESCRIPTOR_F0_MAX_FREQUENCY": {
+   "type": "float",
+   "default": "5000",
+   "doc": "maximum possible f0 frequency."
+  },
+  "IRCAMDESCRIPTOR_F0_AMP_THRESHOLD": {
+   "type": "float",
+   "default": "1",
+   "doc": "Thresholding of the spectrum in F0 detection."
+  },
+  "DESCRIPTOR_DATABASE_SIZE_LIMIT": {
+   "type": "float",
+   "default": "1",
+   "doc": "The maximum size of the analysis database in gigabytes (audioguide/data) that will trigger AudioGuide to delete the oldest analysis files."
+  },
+  "DESCRIPTOR_DATABASE_AGE_LIMIT": {
+   "type": "float",
+   "default": "7",
+   "doc": "The minimum age in days of analysis files in the analysis database (audioguide/data) that AudioGuide will delete if the size of the database is over DESCRIPTOR_DATABASE_SIZE_LIMIT gb."
+  },
+  "ROTATE_VOICES": {
+   "type": "bool",
+   "default": "False]",
+   "doc": "if True, AudioGuide will rotate through the list of corpus entries during concatenation. This means that, when selecting corpus segment one, AudioGuide will only search sound segments from the first item of the CORPUS variable. Selection 2 will only search the second, and so on. Corpus rotation is modular around the length of the CORPUS variable. If the corpus only has one item, True will have no effect."
+  },
+  "VOICE_PATTERN": {
+   "type": "list",
+   "default": "[]",
+   "doc": "if an empty list, this does nothing. However, if the user gives a list of strings, AudioGuide will rotate through this list of each concatenative selection and only use corpus segments who’s filepath match this string. Matching can use parts of the filename, not necessarily the whole path and it is not case sensitive."
+  },
+  "DYNAMIC_TO_DECIBEL": {
+   "type": "dict",
+   "default": "{'pp': -50, 'p': -40, 'mp': -34, 'mf': -24, 'f': -20, 'ff': -10}",
+   "doc": "This variable specifies the default decebel values for dynamic strings used by csf(scaleDb='filenamedyn')."
+  },
+  "FILENAMESTRING_TO_DYNAMICS": {
+   "type": "dict",
+   "default": "{}",
+   "doc": "User-defined strings for matching soundfile names with dynamics as in DYNAMIC_TO_DECIBEL. E.g. {'really loud': 'ff', 'loudish': 'f'}. Any filenames which match one these partial strings will be assigned the given dynamic, and then the decebel scalar found in DYNAMIC_TO_DECIBEL will be used if scaleDb='filenamedyn'."
+  },
+  "OUTPUT_GAIN_DB": {
+   "type": "int/None",
+   "default": "None",
+   "doc": "adds a uniform gain in dB to all selected corpus units. Affects the subtractive envelope calculations and descriptor mixtures as well as csound rendering."
+  },
+  "RANDOM_SEED": {
+   "type": "int/None",
+   "default": "None",
+   "doc": "sets the pseudo-random seed for random unit selection. By default a value of None will use the system’s timestamp. Setting an integer will create repeatable random results."
+  },
+  "OUTPUTEVENT_ALIGN_PEAKS": {
+   "type": "bool",
+   "default": "False",
+   "doc": "If True aligns the peak times of corpus segments to match those of the target segments. Thus, every corpus segment selected to represent a target segment will be moved in time such that corpus segment's peak amplitude is aligned with the target segment's."
+  },
+  "OUTPUTEVENT_QUANTIZE_TIME_METHOD": {
+   "type": "string/None",
+   "default": "None",
+   "doc": "controls the quantisation of the start times of events selected during concatenation. Note that any quantisation takes place after the application of OUTPUTEVENT_TIME_STRETCH and OUTPUTEVENT_TIME_ADD, as detailed below. This variable has the following possible settings:\n\n- None - no quantisation takes place (the default).\n- ‘snapToGrid’ - conform the start times of events to a grid spaced in OUTPUTEVENT_QUANTIZE_TIME_INTERVAL second slices.\n- ‘medianAggregate’ - change each event’s start time to the median start time of events in slices of OUTPUTEVENT_QUANTIZE_TIME_INTERVAL seconds."
+  },
+  "OUTPUTEVENT_QUANTIZE_TIME_INTERVAL": {
+   "type": "float",
+   "default": "0.25",
+   "doc": "defines the temporal interval in seconds for quantisation. If OUTPUTEVENT_QUANTIZE_TIME_METHOD = None, this doesn’t do anything."
+  },
+  "OUTPUTEVENT_TIME_STRETCH": {
+   "type": "float",
+   "default": "1.",
+   "doc": "stretch the temporality of selected units. A value of 2 will stretch all events offsets by a factor of 2. Does not affect corpus segment durations."
+  },
+  "OUTPUTEVENT_TIME_ADD": {
+   "type": "float",
+   "default": "0.",
+   "doc": "offset the start time of selected events by a value in seconds."
+  },
+  "OUTPUTEVENT_DURATION_SELECT": {
+   "type": "string",
+   "default": "cps",
+   "doc": "if 'cps', AudioGuide will play each selected corpus sample according to its duration. if 'tgt', AudioGuide will use the duration of the target segment a corpus segment was matched to to determine its playback duration. 'tgt' may result in clipped corpus sounds."
+  },
+  "OUTPUTEVENT_DURATION_MIN": {
+   "type": "float/None",
+   "default": "None",
+   "doc": "Sets a minimum duration for all selected corpus segments. When this variable is a float, the length of each segment's playback will be at least OUTPUTEVENT_DURATION_MIN seconds (unless the soundfile is too short, in which case the duration will be the soundfile's duration). If None is given (the default), no minimum duration is enforced."
+  },
+  "OUTPUTEVENT_DURATION_MAX": {
+   "type": "float/None",
+   "default": "None",
+   "doc": "Sets a maximum duration for all selected corpus segments. When this variable is a float, the length of each segment's playback cannot be more than OUTPUTEVENT_DURATION_MAX seconds. If None is given (the default), no maximum duration is enforced."
+  },
+  "SEARCH_PATHS": {
+   "type": "list",
+   "default": "[]",
+   "doc": "a list of strings, each of which is a path to a directory where soundfile are located. These paths extend the list of search paths that AudioGuide examines when searching for target and corpus soundfiles. The default is an empty list, which doesn’t do anything."
+  },
+  "VERBOSITY": {
+   "type": "int",
+   "default": "2",
+   "doc": "affects the amount of information AudioGuide prints to the terminal. A value of 0 yields nothing. A value of 1 prints a minimal amount of information. A value of 2 (the default) prints refreshing progress bars to indicate the progress of the algorithms."
+  },
+  "PRINT_SELECTION_HISTO": {
+   "type": "bool",
+   "default": "False",
+   "doc": "if True will print robust information about corpus selection after concatenation. If false (the default) will add this information to the log file, if used."
+  },
+  "PRINT_SIM_SELECTION_HISTO": {
+   "type": "bool",
+   "default": "False",
+   "doc": "if True will print robust information about corpus overlapping selection after concatenation. If false (the default) will add this information to the log file, if used."
+  },
+  "ALWAYS_MAKE_COMPLETE_MATCHING_RESULTS": {
+   "type": "",
+   "default": "",
+   "doc": "No documentation found."
+  },
+  "BACH_SLOTS_MAPPING": {
+   "type": "",
+   "default": "",
+   "doc": "No documentation found."
+  },
+  "CLUSTER_MAPPING": {
+   "type": "",
+   "default": "",
+   "doc": "No documentation found."
+  },
+  "CORPUS_GLOBAL_ATTRIBUTES": {
+   "type": "structured",
+   "default": "",
+   "doc": "A dict of csf() keywords applied to every corpus entry (per-entry values win). See the Corpus tab."
+  },
+  "CORPUS_SEGMENTED_FEATURES_JSON_FILEPATH": {
+   "type": "",
+   "default": "",
+   "doc": "No documentation found."
+  },
+  "DESCRIPTOR_ENERGY_ENVELOPE_HOP_SEC": {
+   "type": "",
+   "default": "",
+   "doc": "No documentation found."
+  },
+  "DESCRIPTOR_OVERRIDE_DATA_PATH": {
+   "type": "",
+   "default": "",
+   "doc": "No documentation found."
+  },
+  "EXPERIMENTAL": {
+   "type": "",
+   "default": "",
+   "doc": "No documentation found."
+  },
+  "INSTRUMENTS": {
+   "type": "structured",
+   "default": "",
+   "doc": "Structured variable: a score() of instr() objects. Edited as raw Python in the Instruments tab."
+  },
+  "NORMALIZATION_DELTA_FREEDOM": {
+   "type": "",
+   "default": "",
+   "doc": "No documentation found."
+  },
+  "NORMALIZATION_METHOD": {
+   "type": "",
+   "default": "",
+   "doc": "No documentation found."
+  },
+  "ORDER_CORPUS_BY_DESCRIPTOR": {
+   "type": "",
+   "default": "",
+   "doc": "No documentation found."
+  },
+  "OUTPUTEVENT_CLASSIFY": {
+   "type": "",
+   "default": "",
+   "doc": "No documentation found."
+  },
+  "OUTPUT_FILE_PREFIX": {
+   "type": "",
+   "default": "",
+   "doc": "No documentation found."
+  },
+  "RESTRICT_CORPUS_OVERLAP_BY_STRING": {
+   "type": "",
+   "default": "",
+   "doc": "No documentation found."
+  },
+  "RESTRICT_CORPUS_SELECT_PERCENTAGE_BY_STRING": {
+   "type": "",
+   "default": "",
+   "doc": "No documentation found."
+  },
+  "SEARCH": {
+   "type": "structured",
+   "default": "",
+   "doc": "Structured variable: a list of spass() objects. Edited in the Search tab."
+  },
+  "SUPERIMPOSE": {
+   "type": "structured",
+   "default": "",
+   "doc": "Structured variable: an si() object. Edited in the Superimpose tab."
+  },
+  "TARGET_SEGMENT_LABELS_INFO": {
+   "type": "",
+   "default": "",
+   "doc": "No documentation found."
+  },
+  "VOICE_TO_ONSET_MAPPING": {
+   "type": "",
+   "default": "",
+   "doc": "No documentation found."
+  }
+ },
+ "tsf": {
+  "start": {
+   "default": "None",
+   "doc": "The time in seconds to start reading the soundfile.",
+   "src": "docs"
+  },
+  "end": {
+   "default": "None",
+   "doc": "The time in seconds to stop reading the soundfile.",
+   "src": "docs"
+  },
+  "thresh": {
+   "default": "-40",
+   "doc": "Segmentation onset threshold: a value from -100 to 0. This is equilavent to the function of the -t flag.",
+   "src": "docs"
+  },
+  "offsetRise": {
+   "default": "1.5",
+   "doc": "Segmentation offset ratio: a number greater than 1. This is equilavent to the function of the -r flag.",
+   "src": "docs"
+  },
+  "offsetThreshAdd": {
+   "default": "+12",
+   "doc": "Segmentation offset relative threshold: a positive value in dB. This is equilavent to the function of the -a flag.",
+   "src": "docs"
+  },
+  "offsetThreshAbs": {
+   "default": "-80",
+   "doc": "Segmentation offset absolute threshold: a negative value in dB. This is equilavent to the function of the -d flag.",
+   "src": "docs"
+  },
+  "scaleDb": {
+   "default": "0",
+   "doc": "Applies an amplitude change to the whole target sound. By default, it is 0, yielding no change. -6 = twice as soft. The target’s amplitude will usually affect concatenation: the louder the target, the more corpus sounds can be composited to approximate it’s energy profile.",
+   "src": "docs"
+  },
+  "minSegLen": {
+   "default": "0.1",
+   "doc": "Segmentation: the minimum duration in seconds of a target segment.",
+   "src": "docs"
+  },
+  "maxSegLen": {
+   "default": "1000",
+   "doc": "Segmentation: the maximum duration in seconds of a target segment.",
+   "src": "docs"
+  },
+  "midiPitchMethod": {
+   "default": "'composite'",
+   "doc": "same as corpus method documented here.",
+   "src": "docs"
+  },
+  "stretch": {
+   "default": "1",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "segmentationFilepath": {
+   "default": "None",
+   "doc": "by default the Target sound is segmented at runtime. However, if you’d like to specify a user-defined segmentation, you may give a file path to this variable. Note that this file must be a textfile with the same format as corpus segmentation files.\n\n TARGET = tsf('cage.aiff') # uses the whole soundfile at its given amplitude\n TARGET = tsf('cage.aiff', start=5, end=7, scaleDb=6) # only use seconds 5-7 of cage.aiff at double the amplitude.",
+   "src": "docs"
+  },
+  "multiriseBool": {
+   "default": "False",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "multirisePercentDev": {
+   "default": "20",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "multiriseSteps": {
+   "default": "5",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "decompose": {
+   "default": "{}",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "partials": {
+   "default": "None",
+   "doc": "No documentation found.",
+   "src": "none"
+  }
+ },
+ "csf": {
+  "allowRepetition": {
+   "default": "True",
+   "doc": "If False, any of the segments from this corpus entry may only be picked one time. If True there is no restriction.",
+   "src": "docs"
+  },
+  "concatFileName": {
+   "default": "None",
+   "doc": "A string indicating a different soundfile path to use when rending with csound. This means that the first argument of the cps() object is used for soundfile descirptor analysis, but the path found in concatFileName if the soundfile used in the concatenated result. By default, concatFileName is set to the same filename as the first argument of the cps().\n\n csf('lachenmann-mono.aiff', concatFileName='lachenmann.stereo.aiff'), # runs the descriptor analysis on lachenmann-mono.aiff, but then uses the audio from lachenmann.stereo.aiff when rendering the csound output.",
+   "src": "docs"
+  },
+  "end": {
+   "default": "None",
+   "doc": "Any segments which start after this time will be ignored.\n csf('lachenmann.aiff', start=20) # only use segments that start later than 20s.\n csf('lachenmann.aiff', start=20, end=50) # only use segments that start between 20-50s.",
+   "src": "docs"
+  },
+  "envelopeSlope": {
+   "default": "1",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "excludeStr": {
+   "default": "None",
+   "doc": "Opposite of includeStr.\n # includeStr/excludeStr have lots of uses. One to highlight here: working with sample databases which are normalized. Rather than having each corpus segment be at 0dbs, we apply a scaleDb value based on the presence of a ‘dynamic' written into the filename.\n csf('Vienna-harpNotes/', includeStr=['_f_', '_ff_'], scaleDb=-6),\n csf('Vienna-harpNotes/', includeStr='_mf_', scaleDb=-18),\n csf('Vienna-harpNotes/', includeStr='_p_', scaleDb=-30),\n # this will use all sounds from this folder which match one of the three dynamics; also see scaleDb='filenamedyn', below.",
+   "src": "docs"
+  },
+  "excludeTimes": {
+   "default": "[]",
+   "doc": "Same as includeTimes but excludes segments in the identified regions.\n\n csf('lachenmann.aiff', includeTimes=[(1, 4), (10, 12)]) # only use segments falling between 1-4 seconds and 10-12 seconds.\n csf('lachenmann.aiff', excludeTimes=[(30, 55)]) # use Target and Corpus except those falling between 30-55s.",
+   "src": "docs"
+  },
+  "includeStr": {
+   "default": "None",
+   "doc": "A string which is matched against the filename (not full path) of each soundfile in a given directory. If part of the soundfile name matches this string, it is included. If not it is excluded. This is case sensitive. See example below.",
+   "src": "docs"
+  },
+  "includeTimes": {
+   "default": "[]",
+   "doc": "A list of two-number lists which specify regions of segments to include from this file’s list of segment times. See example below.",
+   "src": "docs"
+  },
+  "limit": {
+   "default": "{}",
+   "doc": "A list of equation-like strings where segmented descriptor names are used to include/exclude segments from this file / directory.\n csf('lachenmann.aiff', limit=['centroid-seg >= 1000']) # segments whose centroid-seg is equal to or above 1000.\n \n csf('lachenmann.aiff', limit=['centroid-seg 10%']) # only use segments whose power-seg falls between 10%-50% of the total range of power-seg's in this file/directory.",
+   "src": "docs"
+  },
+  "pitchfilter": {
+   "default": "{}",
+   "doc": "removes segments from a csf() entry based on whether or not each segment matches midipitches specified by the user. The user supplies a dictionary with a list of pitches. pitches less than 12 will be treated as pitch classes, i.e. if 0 is given, all pitches modulo 12 which equal 0 will be included. Corpus segments' pitches may be transposed to fit the given pitches -- the 'tolerance' key specifies a semitone tranposition tolerance. For instance, pitchfilter={'pitches': [60], 'tolerance': 3} will include Target and Corpus whose pitch is +-3 semitones from 60, and audioguide will transpose these pitches to be played back at the neaest pitch found in pitches, in this case 60. Note that this feature will override any other transposition given in csf(transMethod=). Also note that a corpus segment's pitch is determined with the segment's MIDIPitch-seg, which can be controled according to csf(midiPitchMethod=)\n csf('pianosamples', pitchfilter={'pitches': [60, 68, 73]}), # discard any segments that do not match any of the given midipitches\n \n csf('pianosamples', pitchfilter={'pitches': [60, 68, 73], 'tolerance': 3}), # discard any segments that do not match any of the given pitches +-3 semitones\n \n csf('pianosamples', pitchfilter={'pitches': ['C4', 'Gs4', 'Db5'], 'tolerance': 3}), # you can also use strings with pitchnames!\n \n csf('pianosamples', pitchfilter={'pitches': [1, 'E4'], 'tolerance': 3}), # C sharp in any octave and E4 will make it through!",
+   "src": "docs"
+  },
+  "limitDur": {
+   "default": "None",
+   "doc": "limits the duration of each segment from this csf() entry. The duration of Target and Corpus over this value (in seconds) will be truncated. This happens before concatenation.",
+   "src": "docs"
+  },
+  "midiPitchMethod": {
+   "default": "'composite'",
+   "doc": "this tells AudioGuide how to calculate the descriptor d('MIDIPitch-seg') for each segment in a tsf() or csf() object. Note that this value is important for writing the bach output files, as it determines the displayed pitch of each target and corpus event. It is also important for csf(limit) and csf(pitchfilter). Note that if any of the methods, detailed below, do not find a result, -1 is returned.\n\n- ‘f0-seg’ - returns the averaged f0 array as the midipitch. Note that it is not power weighted - it is actually the median of f0.\n- ‘centroid-seg’ - returns the power averaged centroid converted into a midipitch.\n- ‘filename’ - looks at the filename of the corpus segment to see if there is a midipitch indicated. Names like A1ShortSeq.wav, Fs1ShortSeq.wav and BP-flatter-f-A\\#3.wav work.\n- ‘composite’ - first tries to look for a midipitch in the filename. If not found, then tries ‘f0-seg’.\n- float/int - a float or int will set all pitches in this csf() to the midipitch written.\n- {'type': 'remap', 'low': 60, 'high': 72, 'method': 'centroid-seg'} - will first determine the pitches in this csf() based on centroid, then remap these values to be between 60 and 70.\n- {'type': 'clip', 'low': 60, 'method': 'centroid-seg'} - will first determine the pitches in this csf() based on centroid, then force any pitch below 60 to be 60.\n- {'type': 'file_match', 'II': 60, 'IV': 72} - will set the midipitch of any filenames that match 'II' to 60; any that match 'IV' are 72, and all other are determined with the midiPitchMethod composite.",
+   "src": "docs"
+  },
+  "offsetLen": {
+   "default": "'30%'",
+   "doc": "Same as onsetLen, but for the envelope fade out.\n csf('lachenmann.aiff', onsetLen=0.1, offsetLen='50%') # will apply a 100ms fade in time and a fade out time lasting 50% of each segments' duration.",
+   "src": "docs"
+  },
+  "onsetLen": {
+   "default": "0.01",
+   "doc": "if onsetLen is a float or integer, it is the fade-in time in seconds. If it is a string formed as ’10%’, it is interpreted as a percent of each segment’s duration. So, onsetLen=0.1 yields a 100 ms. attack envelope while onsetLen=’50%’ yields a fade in over 50% of the segment’s duration.",
+   "src": "docs"
+  },
+  "recursive": {
+   "default": "True",
+   "doc": "if True AudioGuide will include sounds in all subfolders of a given directory.\n csf('/Users/ben/gravillons', wholeFile=True, recursive=False) # will only use soundfiles in the named folder, ignoring its subdirectories.",
+   "src": "docs"
+  },
+  "restrictInTime": {
+   "default": "0",
+   "doc": "a time in seconds specifying how often a sample from this entry may be selected. -- for example restrictInTime=0.5 would permit segments from this collection to be select a maximum of once every 0.5 seconds.",
+   "src": "docs"
+  },
+  "restrictOverlaps": {
+   "default": "None",
+   "doc": "An integer specifying how many overlapping samples from this collection may be chosen by the concatenative algorithm at any given moment. So, restrictOverlaps=2 only permits 2 overlapping voices at a time.",
+   "src": "docs"
+  },
+  "restrictRepetition": {
+   "default": "0.5",
+   "doc": "A delay time in seconds where, once chosen, a segment from this corpus entry is invalid to be picked again. The default is 0.5, which the same corpus segment from being selected in quick succession.\n csf('piano/', allowRepetition=False) # each individual segment found in this directory of files may only be deleted one time during concatenation.\n csf('piano/', restrictRepetition=2.5) # Each segment is invalid to be picked if it has already been selected in the last 2.5 seconds.",
+   "src": "docs"
+  },
+  "scaleDb": {
+   "default": "0.0",
+   "doc": "applies an amplitude change to each segment of this collection. by default, it is 0, yielding no change. -6 = twice as soft. Note that amplitude scaling affects both the concatenative algorithm and the csound rendering. Also note that scaleDb='filenamedyn' will attempt to scale all sounds in this corpus by finding a dynamic written in the filenames according to DYNAMIC_TO_DECIBEL and FILENAMESTRING_TO_DYNAMICS.",
+   "src": "docs"
+  },
+  "scaleDistance": {
+   "default": "1",
+   "doc": "Scale the resulting distance when executing a multidimensional search using on segments. scaleDistance=2 will make these sounds twice as ‘far’, and thus less likely to be selected by the search algorithm. scaleDistance=0.25 makes 4 times more likely to be picked.",
+   "src": "docs"
+  },
+  "segmentationExtension": {
+   "default": "'.txt'",
+   "doc": "Manually specify the segmentation text file extension. See above.\n\n csf('lachenmann.aiff', segmentationFile='marmotTent.txt') # will use a segmentation file called marmotTent.txt, not the default lachenmann.aiff.txt.\n \n csf('lachenmann.aiff', segmentationExtension='-gran.txt') # will use a segmentation file called lachenmann.aiff-gran.txt, not the default lachenmann.aiff.txt.",
+   "src": "docs"
+  },
+  "segmentationFile": {
+   "default": "None",
+   "doc": "Manually specify the segmentation text file. By default, AudioGuide automatically looks for a file with the same name as the soundfile plus the extension ‘.txt’. You may specify a path file (as a string), or a list of strings to include multiple segmentation files which all use the same soundfile.",
+   "src": "docs"
+  },
+  "start": {
+   "default": "None",
+   "doc": "Any segments which start before this time will be ignored.",
+   "src": "docs"
+  },
+  "superimposeRule": {
+   "default": "None",
+   "doc": "This one is a little crazy. Basically, you can specify when this corpus’s segments can be chosen based on the number of simultaneously selected samples. You do this by writing a little equation as a 2-item list. superimposeRule=(‘==’, 0) says that this set of corpus segments may only be chosen is this is the first selection for this target segment (sim selection ‘0’). superimposeRule=(‘$>$’, 2) say this corpus’s segments are only valid to by picked if there are already more than 2 selections for this target segment. I know, right?",
+   "src": "docs"
+  },
+  "transMethod": {
+   "default": "None",
+   "doc": "A string indicating how to transpose segments chosen from this corpus entry. You may chose from:",
+   "src": "docs"
+  },
+  "transQuantize": {
+   "default": "0",
+   "doc": "Quantization interval for transposition of corpus sounds. 1 will quantize to semitones, 0.5 to quarter tones, 2 to whole tones, etc.\n csf('piano/', transMethod='f0') # transpose corpus segments to match the target's f0.\n csf('piano/', transMethod='f0-chroma', transQuantize=0.5) # transpose corpus segments to match the target's f0 mod 12. Then quantize each resulting pitch to the newest quarter of tone.",
+   "src": "docs"
+  },
+  "wholeFile": {
+   "default": "False",
+   "doc": "if True AudioGuide will use this soundfile as one single segment. If False, AudioGuide will search for a segmnetation file made with agSegmentSf.py.\n csf('sliced/my-directory', wholeFile=True) # will not search for a segmentation txt file, but use whole soundfiles as single segments.",
+   "src": "docs"
+  },
+  "wholeFileMinStart": {
+   "default": "0",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "wholeFileMaxEnd": {
+   "default": "None",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "metadata": {
+   "default": "[]",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "maxPercentTargetSegments": {
+   "default": "None",
+   "doc": "a float as a percentage value from 0-100. This number limits the number of target segments that this corpus entry may be selected. For example, a value of 50 means that this corpus entry is only valid for up to 50% of target segments; after this threshold has been crossed, further selections are not possible. None is the default, which has no effect.",
+   "src": "docs"
+  },
+  "instrTag": {
+   "default": "None",
+   "doc": "By default, None. If set to a string, this csf() will be linked to an instrument in the score(). E.g. instrTag='tumpet' will permit instr('tumpet') use the segments in this csf(). You may link this csf() to multiple instr()s by using a list: instrTag=['tumpet', 'tombone']",
+   "src": "docs"
+  },
+  "instrParams": {
+   "default": "{}",
+   "doc": "By default, an empty dictionary {}. Use this dictionary to specify notation and behavior of this csf() in the context of writing for instruments with instr(). See a list of all keywords in the Instruments section.",
+   "src": "docs"
+  },
+  "clipDurationToTarget": {
+   "default": "False",
+   "doc": "If True, the duration of any selected sounds from this csf() will be truncated by the duration of the target. This happens after concatenation takes place.",
+   "src": "docs"
+  }
+ },
+ "si": {
+  "minSegment": {
+   "default": "None",
+   "doc": "The minimum number of corpus segments that must be chosen to match a target segment.",
+   "src": "docs"
+  },
+  "maxSegment": {
+   "default": "None",
+   "doc": "The maximum number of corpus segments that must be chosen to match a target segment.",
+   "src": "docs"
+  },
+  "minFrame": {
+   "default": "None",
+   "doc": "The minimum number of corpus segments that must be chosen to begin at any single moment in time.",
+   "src": "docs"
+  },
+  "maxFrame": {
+   "default": "None",
+   "doc": "The maximum number of corpus segments that must be chosen to begin at any single moment in time.",
+   "src": "docs"
+  },
+  "minOverlap": {
+   "default": "None",
+   "doc": "The minimum number of overlapping corpus segments at any single moment in time. Note that an ‘overlap’ is determined according to an amplitude threshold -- see overlapAmpThresh.",
+   "src": "docs"
+  },
+  "maxOverlap": {
+   "default": "None",
+   "doc": "The maximum number of overlapping corpus segments at any single moment in time. Note that an ‘overlap’ is determined according to an amplitude threshold -- see overlapAmpThresh.",
+   "src": "docs"
+  },
+  "overlapAmpThresh": {
+   "default": "-70",
+   "doc": "Note that an ‘overlap’ is determined according to an amplitude threshold -- see overlapAmpThresh.",
+   "src": "prose"
+  },
+  "searchOrder": {
+   "default": "'power'",
+   "doc": "(‘power’ or ‘time’) The default is ‘time’, which indicated to match corpus segments to target segments in the temporal order of the target (i.e., first searched segment is the first segment in time). ‘power’ indicates to first sort the target segments from loudest to softest, then search for corpus matches.",
+   "src": "docs"
+  },
+  "subtractScale": {
+   "default": "1",
+   "doc": "A float/int/string which denotes how much of a corpus sound's amplitude to subtract from the target. By default it is 1; a value of 0.5 will scale corpus semgment amplitudes by 0,5 before subtracting them from the target. This variable is only meaningful if si(calcMethod='subtract') or si(calcMethod='mixture'). More information in this tutorial video clip.\n\n- float/int - Scale the amplitude of corpus sounds by this number when subtracting them from the target.\n- ‘automedian’ - use the median of target and corpus segment amplitudes to determine the amount to scale subtraction.\n- ‘automax’ - use the maximum of target and corpus segment amplitudes to determine the amount to scale subtraction.",
+   "src": "docs"
+  },
+  "subtractDur": {
+   "default": "'corpusDur'",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "ampDur": {
+   "default": "'corpusDur'",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "overlapDur": {
+   "default": "'corpusEffDur'",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "calcMethod": {
+   "default": "'mixture'",
+   "doc": "A None/string which denotes how to audioguide should account for selected corpus sounds that overlap. By default, it is 'mixture'. Note that not all descriptors can be algorithnmically mixed, e.g. f0, zeroCross. More information in this tutorial video clip.",
+   "src": "docs"
+  },
+  "simCalcDur": {
+   "default": "'corpusEffDur'",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "peakAlign": {
+   "default": "False",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "peakAlignEnvelope": {
+   "default": "'subtracted'",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "incr": {
+   "default": "1",
+   "doc": "No documentation found.",
+   "src": "none"
+  }
+ },
+ "d": {
+  "weight": {
+   "default": "1.",
+   "doc": "How to weight this descriptor in relation to other descriptors.\n SEARCH= [spass('closest', d('centroid', weight=1), d('noisiness', weight=0.5))]# centroid is twice as important as noisiness.",
+   "src": "docs"
+  },
+  "norm": {
+   "default": "2.",
+   "doc": "A value of 2 normalizes the target and corpus data separately. A value of 1 normalizes the target and corpus data together. 2 will yield a better rendering of the target’s morphological contour. 1 will remain more faithful to concrete descriptor values. I recommend using 2 by default, only using 1 when dealing with very ‘descriptive’ descriptors like duration or pitch.\n\n SEARCH = [spass('closest', d('centroid'), d('effDur-seg', norm=1))]",
+   "src": "docs"
+  },
+  "normmethod": {
+   "default": "'stddev'",
+   "doc": "How to normalize data -- either ‘stddev’ or ‘minmax’. minmax is more precise, stddev is more forgiving of ‘outliers.’",
+   "src": "docs"
+  },
+  "distance": {
+   "default": "'euclidean'",
+   "doc": "Only valid for time-varying descriptors. How to arithmetically measure distance between target and corpus arrays.\n\n- ‘euclidean’ - does a simple least squares distance.\n- ‘pearson’ - a pearson correlation measurement.\n- ‘dtw’ - distance measurement according to dynamic time warping.\n\n SEARCH = [spass('closest', d('centroid', distance='pearson'))] # uses a pearson correlation formula for determining distance between target and corpus centroid arrays.",
+   "src": "docs"
+  },
+  "limit": {
+   "default": "False",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "energyWeight": {
+   "default": "False",
+   "doc": "Only valid for time-varying descriptors. Weight distance calculations with the corpus segments’ energy values. The means that softer frames will not affect distance as much as louder frames. Only works if distance=‘euclidean’.",
+   "src": "docs"
+  }
+ },
+ "instr": {
+  "temporal_mode": {
+   "default": "'sus'",
+   "doc": "'sus' by default, which indicates a sustained event.",
+   "src": "docs"
+  },
+  "minspeed": {
+   "default": "0.075",
+   "doc": "The minimum distance between adjecent note onsets for this instrument in seconds.",
+   "src": "docs"
+  },
+  "pitched": {
+   "default": "True",
+   "doc": "True of False. True by default, which does nothing. When False, this csf() will ignore any limitations from pitchfilters, interval_limit_breakpoints, and interval_limit_range_per_sec.",
+   "src": "docs"
+  },
+  "minpitch": {
+   "default": "None",
+   "doc": "None of a float. None does nothing; a float sets the minimum midi pitch this instrument can play.",
+   "src": "docs"
+  },
+  "maxpitch": {
+   "default": "None",
+   "doc": "None of a float. None does nothing; a float sets the maximum midi pitch this instrument can play.",
+   "src": "docs"
+  },
+  "interval_limit_range_per_sec": {
+   "default": "None",
+   "doc": "None or a number. Described in the Handling Pitch section, below.",
+   "src": "docs"
+  },
+  "interval_limit_breakpoints": {
+   "default": "[]",
+   "doc": "A list. Described in the Handling Pitch section below.",
+   "src": "docs"
+  },
+  "polyphony_max_voices": {
+   "default": "1",
+   "doc": "Maximum voices that may be picked at the same time for this instrument.",
+   "src": "docs"
+  },
+  "polyphony_minspeed": {
+   "default": "None",
+   "doc": "The minimum allowable time between polyphonic chord onsets in seconds. This works the same way as minspeed, but only applies to polyphonic selections.",
+   "src": "docs"
+  },
+  "polyphony_min_range": {
+   "default": "None",
+   "doc": "If a number, the minimum interval from the lowest to highest note in a chord in semitones. If None, there is no limit.",
+   "src": "docs"
+  },
+  "polyphony_max_range": {
+   "default": "None",
+   "doc": "If a number, the maximum interval from the lowest to highest note in a chord in semitones. If None, there is no limit.",
+   "src": "docs"
+  },
+  "polyphony_include_intervals": {
+   "default": "[]",
+   "doc": "By default, an empty list, which does nothing. However, if you add one or more intervals in semitones, polyphonic selections will be limited to the intervals specified. I.e. polyphony_include_intervals=[7] will only permit perfect 5th polyphony.",
+   "src": "docs"
+  },
+  "polyphony_exclude_intervals": {
+   "default": "[]",
+   "doc": "By default, an empty list, which does nothing. However, if you add one or more intervals in semitones, polyphonic selections will not include the intervals specified. I.e. polyphony_exclude_intervals=[7] will not permit perfect 5ths in the polyphony.",
+   "src": "docs"
+  },
+  "polyphony_permit_unison": {
+   "default": "False",
+   "doc": "If True, unisons may be selected as part of a chord.",
+   "src": "docs"
+  },
+  "polyphony_max_db_difference": {
+   "default": "4",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "dynamics": {
+   "default": "('pp'",
+   "doc": "A list of dynamic indications to use all segments of the csf(). csf() segments will be ordered from softest to loudest, then assigned a dynamic from the list you specify. By default, it is ['pp', 'p', 'mp', 'mf', 'f', 'ff']. Note that, if AudioGuide finds dynamics written into the filenames of your csf segments, it will use those instead.",
+   "src": "docs"
+  },
+  "dynamic_method": {
+   "default": "'uniform'",
+   "doc": "'uniform' or 'real' <- denotes how dynamics are inferred from power-seg measuresments.",
+   "src": "code-comment"
+  },
+  "technique_switch_delay_map": {
+   "default": "[]",
+   "doc": "technique_switch_delay_map let's you specify a list of minimum delay times needed to switich form one csf() technique to another. ['tech1', 'tech2', 0.5] = to go from tech1 to tech2, there must be a delay of at least 0.5 seconds. Techniques must be assigned to csf() objects using the instrParams dictionary. See the example in Handling Time below.",
+   "src": "docs"
+  },
+  "clef": {
+   "default": "'G'",
+   "doc": "The clef for this instrument in the bach.roll. Valid values include, 'F', 'G', 'Alto', and 'FG' for a grand staff. See bach's documentation on clefs for more information.",
+   "src": "docs"
+  },
+  "key": {
+   "default": "'CM'",
+   "doc": "The key for this instrument in the bach.roll. See bach's documentation on keys for more information.",
+   "src": "docs"
+  }
+ },
+ "score": {
+  "tempo": {
+   "default": "60",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "meter": {
+   "default": "'4/4'",
+   "doc": "No documentation found.",
+   "src": "none"
+  }
+ },
+ "spass": {
+  "method:closest": {
+   "default": "",
+   "doc": "picks the best matching corpus sound according to one of more descriptors."
+  },
+  "method:farthest": {
+   "default": "",
+   "doc": "picks the worst matching corpus sound according to one of more descriptors."
+  },
+  "method:closest_percent": {
+   "default": "",
+   "doc": "returns a percentage of the best matching corpus sounds according to one of more descriptors."
+  },
+  "method:farthest_percent": {
+   "default": "",
+   "doc": "returns a percentage of the worst matching corpus sounds according to one of more descriptors."
+  },
+  "method:ratio_limit": {
+   "default": "",
+   "doc": "returns any corpus sounds if, for a given descriptor, the ratio of the target segment/corpus segment falls within certain user specified limits."
+  },
+  "method:parser": {
+   "default": "",
+   "doc": "Structured as an if-then-else, this method toggles between two different actions depending on a whether a taget segment's descriptor passes a test."
+  },
+  "method:target_partial_filter": {
+   "default": "",
+   "doc": "No documentation found."
+  },
+  "percent": {
+   "default": "None",
+   "doc": "The keyword 'percent' is required.",
+   "src": "prose"
+  },
+  "bypass": {
+   "default": "False",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "pitchtolerance": {
+   "default": "4",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "dbtolerance": {
+   "default": "12",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "minratio": {
+   "default": "None",
+   "doc": "Only corpus samples whose ratio is within the specified limits (keywords minratio and maxratio) are allowed to pass.",
+   "src": "prose"
+  },
+  "maxratio": {
+   "default": "None",
+   "doc": "Only corpus samples whose ratio is within the specified limits (keywords minratio and maxratio) are allowed to pass.",
+   "src": "prose"
+  },
+  "complete_results": {
+   "default": "False",
+   "doc": "No documentation found.",
+   "src": "none"
+  },
+  "number": {
+   "default": "10",
+   "doc": "No documentation found.",
+   "src": "none"
+  }
+ }
+}
