@@ -172,8 +172,16 @@ class TerminalController:
 
 
 
+## AGGUI: machine-readable progress protocol. When the environment variable
+## AGGUI_PROGRESS=1 is set, printer methods emit one JSON object per line on
+## stderr and suppress terminal bar drawing (ProgressBar raises ValueError on
+## non-tty streams, so suppression is required when running through a pipe).
+## Terminal behavior is unchanged when the variable is absent.
+import os as _aggui_os, json as _aggui_json
+
 class printer:
 	def __init__(self, verbosity, optionsPath, pathtohtmlfile, length=70):
+		self._aggui = _aggui_os.environ.get('AGGUI_PROGRESS') == '1'  ## AGGUI
 		self.updateLength = length
 		self.v = verbosity
 		if self.v == 0:
@@ -221,7 +229,14 @@ class printer:
 	def pnt(self, *args):
 		if self.v >= 2: print(args)
 	###############################################
+	def _aggui_emit(self, **kw):  ## AGGUI
+		sys.stderr.write(_aggui_json.dumps(kw) + '\n')
+		sys.stderr.flush()
+	###############################################
 	def startPercentageBar(self, upperLabel='', total=100):
+		if self._aggui:  ## AGGUI
+			self._aggui_emit(ev='bar_start', label=upperLabel, total=total)
+			return
 		if self.v == 1 and upperLabel != '':
 			print(upperLabel + '...')
 			return
@@ -232,6 +247,9 @@ class printer:
 		self.file = ''
 	###############################################
 	def percentageBarNext(self, lowerLabel='', incr=1):
+		if self._aggui:  ## AGGUI
+			self._aggui_emit(ev='bar_incr', label=lowerLabel, incr=incr)
+			return
 		if self.v < 2: return
 		maxlen = self.updateLength-20
 		if len(lowerLabel) >=  maxlen:
@@ -242,6 +260,9 @@ class printer:
 		self.counter += incr
 	###############################################
 	def percentageBarClose(self, txt="Done."):
+		if self._aggui:  ## AGGUI
+			self._aggui_emit(ev='bar_close', txt=txt)
+			return
 		if self.v < 2: return
 		self.up(txt)
 		self.progress.clear()
@@ -253,6 +274,9 @@ class printer:
 		print("\n")
 	###############################################
 	def middleprint(self, string, force=False, colour='CYAN', borderchar='-', cr=True): # MIDDLE print call
+		if self._aggui:  ## AGGUI
+			self._aggui_emit(ev='section', text=str(string))
+			return
 		if self.v == 0 and not force: return
 		outsides = int(((self.updateLength-len(string)-2)/2.0))*borderchar
 		printstr = "${BOLD}${%s}%s %s %s${NORMAL}"%(colour, outsides, str(string), outsides)
@@ -260,17 +284,31 @@ class printer:
 		self.renderOrLog(self.term.render(printstr))
 	###############################################
 	def printProgramInfo(self, agversion, force=False):
+		if self._aggui:  ## AGGUI
+			self._aggui_emit(ev='log', text='audioguide%s -> %s' % (agversion, os.path.dirname(__file__)))
+			self._aggui_emit(ev='log', text='python%s -> %s' % (sys.version.split()[0], os.path.abspath(sys.executable)))
+			return
 		if self.v == 0: return
 		self.renderOrLog(self.term.render("${RED}audioguide%s${NORMAL} -> %s"%(agversion, os.path.dirname(__file__))))
 		self.renderOrLog(self.term.render("${RED}python%s${NORMAL} -> %s"%(sys.version.split()[0], os.path.abspath(sys.executable))))
 	###############################################
 	def printDict(self, header, dictObj, valueColour='RED'):
+		if self._aggui:  ## AGGUI
+			self._aggui_emit(ev='section', text=str(header))
+			for key, val in dictObj.items():
+				self._aggui_emit(ev='log', text='%s -> %s' % (key, val))
+			return
 		if self.v == 0: return
 		self.middleprint(header, cr=False)
 		for key, val in dictObj.items():
 			self.renderOrLog(self.term.render("${BOLD}%s${NORMAL} -> ${%s}%s${NORMAL}"%(str(key), valueColour, str(val))))
 	###############################################
 	def printListLikeHistogram(self, header, values, valueColour='RED'):
+		if self._aggui:  ## AGGUI
+			self._aggui_emit(ev='section', text=str(header))
+			for frequency, label in util.histogram(values):
+				self._aggui_emit(ev='log', text='%s -> %.0f%%' % (label, frequency/float(len(values))*100))
+			return
 		if self.v == 0: return
 		self.middleprint(header, cr=False)
 		for frequency, label in util.histogram(values):
@@ -284,10 +322,16 @@ class printer:
 			print(string)
 	###############################################
 	def pprint(self, string, colour='RED'):
+		if self._aggui:  ## AGGUI
+			self._aggui_emit(ev='log', text=str(string))
+			return
 		if self.v == 0: return
 		self.renderOrLog(self.term.render("${%s}%s${NORMAL}"%(colour, str(string))))
 	###############################################
 	def printreject(self, numb, percent, file):
+		if self._aggui:  ## AGGUI
+			self._aggui_emit(ev='log', text='removed %i (%.1f%%) segments from %s' % (numb, percent, file))
+			return
 		if self.v == 0: return
 		self.renderOrLog(self.term.render("\tremoved ${BOLD}"+str(numb)+"${NORMAL} (${BLUE}"+"%.1f%%"%percent+"${NORMAL}) ${NORMAL}segments from "+file+"\n"))
 

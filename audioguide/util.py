@@ -49,6 +49,13 @@ def exit(*args):
 
 
 def error(errorType, errorData, exitcode=1):
+	## AGGUI: emit a machine-readable error before exiting so the GUI can show
+	## a proper dialog instead of scraping terminal output.
+	import os as _o, json as _j
+	if _o.environ.get('AGGUI_PROGRESS') == '1':
+		sys.stderr.write(_j.dumps({'ev': 'error', 'tag': str(errorType), 'msg': str(errorData)}) + '\n')
+		sys.stderr.flush()
+		exit(exitcode)
 	print(ladytext("%s ERROR: %s"%(bold(errorType.upper()), errorData)))
 	exit(exitcode)
 
